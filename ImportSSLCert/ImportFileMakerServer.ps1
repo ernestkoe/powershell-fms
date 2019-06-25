@@ -32,7 +32,8 @@ param(
     
     [Parameter(Position=1,Mandatory=$true)]
 	[string]
-	$CertificatePath,	
+	$CertificatePath,
+
 	[switch]$DebugOn
 )
 
@@ -48,8 +49,6 @@ $fms = @{
 	certificate = "$CertificatePath\$ServerHostName-chain.pem"
 	keyfile = "$CertificatePath\$ServerHostName-key.pem"
     # chain_path =  "$CertificatePath\$ServerHostName-chain.pem"
-
-
 }
 
 # Print debugging info to make sure the parameters arrived
