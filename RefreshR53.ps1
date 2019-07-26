@@ -2,24 +2,27 @@
 # https://www.burnham.io/2017/02/dynamic-dns-using-amazon-route-53-and-powershell/
 #
 
-$DomainName = 'test.burnham.io.'
-$RecordType = 'A'
+#import AWSPowerShell.NetCore
 
-# Optional - set a subdomain.
-$Subdomain = 'nowhere'
+Import-Module AWSPowerShell.NetCore
+
+# Import from JSON object
+$Path = "./R53_config.json"
+$JSONdata = Get-Content -Raw -Path $Path | ConvertFrom-Json
+
 
 # Create the FQDN
-If($Subdomain)
+If($JSONdata.Subdomain)
 {
-    $FQDN = @($Subdomain, $DomainName) -join '.'
+    $FQDN = @($JSONdata.Subdomain, $JSONdata.DomainName) -join '.'
 }
 Else
 {
-    $FQDN = $DomainName
+    $FQDN = $JSONdata.DomainName
 }
 
 # Get the Hosted Zone
-$Zone = Get-R53HostedZones | Where-Object {$_.Name -eq $DomainName}
+$Zone = Get-R53HostedZones | Where-Object {$_.Name -eq $JSONdata.DomainName}
 If($Zone)
 {
     # Get the resource record sets for this zone, taking care to pull as many records as there are in the zone.
@@ -53,5 +56,5 @@ If($Zone)
 }
 Else
 {
-    throw("Unable to locate hosted zone for domain {0}" -f $DomainName)
+    throw("Unable to locate hosted zone for domain {0}" -f $JSONdata.DomainName)
 }
