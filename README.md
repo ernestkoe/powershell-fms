@@ -12,7 +12,8 @@ Saves filemaker server admin credentials to an encrypted credentials store file 
   
 Imports letsencrypt certificates into FileMaker Server
 
-### UpdateRoute53 ### (in progress)
+### UpdateRoute53 ###
+- (In Progress)
 
 Updates Route53 DNS
 
