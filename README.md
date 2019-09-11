@@ -6,7 +6,7 @@ This is a collection of Windows Powershell scripts to make FIleMaker Server devo
 
 ### SaveFMSCredentials ###
 
-Saves filemaker credentials to an encrypted credentials store file in the FileMaker cstore folder (or whichever is specified) so that ImportFMS-SSL knows where to look for it.
+Saves filemaker server admin credentials to an encrypted credentials store file in the FileMaker cstore folder (or whichever is specified) so that InstallSSL knows where to look for it.
 
 ### InstallSSL ###
   

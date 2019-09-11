@@ -9,7 +9,7 @@ function Save-Password {
         $Filename,
 
         [Parameter(Mandatory=$false)]
-        [string]
+        [SecureString]
         $CredsPath
     )
 
