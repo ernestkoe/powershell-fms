@@ -12,14 +12,14 @@ Saves filemaker server admin credentials to an encrypted credentials store file 
   
 Imports letsencrypt certificates into FileMaker Server
 
-### UpdateRoute53 ###
+### UpdateRoute53 ### (in progress)
 
 Updates Route53 DNS
 
-## Requirements ##
+#### Requirements ##
 
 * set up an AWS IAM user
 * download Windows AWS Tools
 * download Windows AWS CLI Tools
   
-## Configuration ##
+### Configuration ##
