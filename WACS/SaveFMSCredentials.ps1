@@ -1,4 +1,4 @@
-$DEFAULT_PATH = "C:\Program Files\FileMaker\FileMaker Server\CStore"
+$DEFAULT_PATH = "C:\ProgramData\win-acme"
 $DEFAULT_CRED_FILENAME = "WacsFMSCreds.xml"
 
 function Save-Password {
@@ -9,9 +9,9 @@ function Save-Password {
         $Filename,
 
         [Parameter(Mandatory=$false)]
-        [SecureString]
+        [string]
         $CredsPath
-    )
+    )  
 
     if (!$Filename) {
         $Filename = Read-Host "Enter filename, (WacsFMSCreds.xml)"
