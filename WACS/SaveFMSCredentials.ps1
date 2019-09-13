@@ -11,6 +11,15 @@ filename of the encrypted FMS credentials xml file. This defaults to `WacsFMSCre
 .PARAMETER path
 Folder in which we want to save that credentials file, defaults to 'C:\ProgramData\win-acme'
 
+.PARAMETER u
+Username
+
+.PARAMETER p
+Password
+
+.EXAMPLE
+./SaveFMSCredentials -filename fmsadmincreds.xml -path c:\myfolder -u admin -p somepassword
+
 #>
 
 param(
