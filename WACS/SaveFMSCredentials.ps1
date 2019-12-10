@@ -16,7 +16,6 @@ Username
 
 .PARAMETER p
 Password
-
 .EXAMPLE
 ./SaveFMSCredentials -filename fmsadmincreds.xml -path c:\myfolder -u admin -p somepassword
 
@@ -24,50 +23,63 @@ Password
 
 param(
     [Parameter(Mandatory=$false)]
-    [string] $filename,
+    [string] $Filename,
 
     [Parameter(Mandatory=$false)]
-    [string] $path,
+    [string] $Path,
 
     [Parameter(Mandatory=$false)]
-    [string] $u,
+    [string] $U,
 
     [Parameter(Mandatory=$false)]
-    [string] $p
-
+    [string] $P
 )  
+$ErrorActionPreference = 'Stop'
 $DEFAULT_PATH = "C:\ProgramData\win-acme"
 $DEFAULT_CRED_filename = "WacsFMSCreds.xml"
 
 function Save-Password {
 
-    Write-Host $filename $path $u $p
-    if (!$filename) {
-        $filename = Read-Host "Enter filename, (WacsFMSCreds.xml)"
-        if ( !$filename ) { $filename = $DEFAULT_CRED_filename }
-        # Write-Host $filename
+    Write-Host $Filename $Path $U $P
+
+    if (!$Filename) {
+        $Filename = Read-Host "Enter filename, (WacsFMSCreds.xml)"
+        if ( !$Filename ) { $Filename = $DEFAULT_CRED_filename }
+        # Write-Host $Filename
     }
    
-    if (!$path) {
-        $path = Read-Host "Save $filename to: ($DEFAULT_PATH)"
-        if ( !$path ) { $path = $DEFAULT_PATH }
+    if (!$Path) {
+        $Path = Read-Host "Save $Filename to: ($DEFAULT_PATH)"
+        if ( !$Path ) { $Path = $DEFAULT_PATH }
     }
  
     #Get credentials securely
-    if (!$u -and !$p) { 
+    if (!$U -and !$P) { 
         Write-Host 'username and password not specified'
         $Credentials = Get-Credential -message "What is the FileMaker Server admin user and password?"
     } else {
 
-        $PWord = ConvertTo-SecureString -String $p -AsPlainText -Force
-        $Credentials = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $u, $PWord
+        $PWord = ConvertTo-SecureString -String $P -AsPlainText -Force
+        $Credentials = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $U, $PWord
     }
 
+    try {
+        $Path =  Join-Path -Path $Path -ChildPath $Filename
+    }
+    catch {
+        Write-Host $_.Exception.Message`n
+    }
+  
 
-    $Path =  Join-Path -Path $path -ChildPath $filename
-    $Credentials | Export-CliXml $Path
+    try {
+           $Credentials | Export-CliXml $Path
+        }
+    catch
+        {
+          Write-Host $_.Exception.Message`n
+        }
      
-    Write-Host "Encrypted FileMaker Server Credentials saved to $Path"
+  
 
     #Test to make sure our creds are good
     
