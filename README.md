@@ -17,11 +17,17 @@ WACS (aka Win-ACME) is a program that manages LetsEncrypt certificates on window
 
 ##### SaveFMSCredentials.ps1 #####
 
-This script saves filemaker server admin credentials to an encrypted credentials store file in the FileMaker cstore folder (or whichever is specified) so that InstallSSL knows where to look for it.
-  
-Run this first to save FileMaker Credentials to an ecrypted file object:
+Run this to save FileMaker Credentials to an encrypted file object. If no `-filename` or `-path` arguments are found, it will default to the filename, `WacsFMSCreds.xml` and the directory, `C:\ProgramData\win-acme`.
 
-     `./SaveFMSCredentials.ps1 -filename fmsSecrets.xml -path c:\programdata\win-acme -u theadminuser -p thepassword`
+Command:
+
+     SaveFMSCredentials -filename "{filename}" -path "{somepath}" -u "{fmadin username}" -p "{fmsadmin password}"
+
+Note: Quotes are optional and are used to escape arguments that contain spaces.
+
+Example:
+  
+     ./SaveFMSCredentials.ps1 -filename fmsSecrets.xml -path C:\mysecrets -u theadminuser -p thepassword
 
 ##### InstallSSL.ps1 #####
 
