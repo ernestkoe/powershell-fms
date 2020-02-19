@@ -35,7 +35,7 @@ param(
     [string] $P
 )  
 $ErrorActionPreference = 'Stop'
-$DEFAULT_PATH = "C:\ProgramData\win-acme"
+$DEFAULT_PATH = "C:\Program Files\FileMaker\FileMaker Server\CStore\"
 $DEFAULT_CRED_filename = "WacsFMSCreds.xml"
 
 function Save-Password {
