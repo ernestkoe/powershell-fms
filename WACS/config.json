@@ -1,6 +1,5 @@
-{ 
+{   
     "DEFAULT_FMS_CSTORE_PATH" : "C:\\Program Files\\FileMaker\\FileMaker Server\\CStore\\",
     "DEFAULT_WacsFMSCredsPath": "C:\\Program Files\\FileMaker\\FileMaker Server\\CStore\\",
-    "DEFAULT_WacsFMSCredsFilename" : "WacsFMSCreds.xml"
+    "DEFAULT_WacsFMSCredsFilename" : "FMSAdminCreds.xml"
 }
-

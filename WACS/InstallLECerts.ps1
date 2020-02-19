@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Imports a cert from WASC renewal into FileMaker server.
+Imports a cert from WASC/Letsencrypt renewal into FileMaker server.
 
 .DESCRIPTION
 Note that this script is intended to be run via the install script plugin from WASC via the batch script wrapper. As such, we use positional parameters to avoid issues with using a dash in the cmd line.

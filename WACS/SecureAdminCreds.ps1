@@ -35,21 +35,23 @@ param(
     [string] $P
 )  
 $ErrorActionPreference = 'Stop'
-$DEFAULT_PATH = "C:\Program Files\FileMaker\FileMaker Server\CStore\"
-$DEFAULT_CRED_filename = "WacsFMSCreds.xml"
+
+$env = Get-Content config.JSON | ConvertFrom-Json
+$DEFAULT_PATH = $env.DEFAULT_FMS_CSTORE_PATH
+$DEFAULT_CRED_filename = $env.DEFAULT_WacsFMSCredsFilename
 
 function Save-Password {
 
     Write-Host $Filename $Path $U $P
 
     if (!$Filename) {
-        $Filename = Read-Host "Enter filename, (WacsFMSCreds.xml)"
+        $Filename = Read-Host "Enter filename, ($($DEFAULT_CRED_filename))"
         if ( !$Filename ) { $Filename = $DEFAULT_CRED_filename }
         # Write-Host $Filename
     }
    
     if (!$Path) {
-        $Path = Read-Host "Save $Filename to: ($DEFAULT_PATH)"
+        $Path = Read-Host "Save $Filename to: ($($DEFAULT_PATH))"
         if ( !$Path ) { $Path = $DEFAULT_PATH }
     }
  
