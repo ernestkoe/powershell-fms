@@ -1,5 +1,6 @@
 {   
-    "DEFAULT_FMS_CSTORE_PATH" : "C:\\Program Files\\FileMaker\\FileMaker Server\\CStore\\",
-    "DEFAULT_WacsFMSCredsPath": "C:\\Program Files\\FileMaker\\FileMaker Server\\CStore\\",
-    "DEFAULT_WacsFMSCredsFilename" : "FMSAdminCreds.xml"
+    "FMSCStorePath" : "C:\\Program Files\\FileMaker\\FileMaker Server\\CStore\\",
+    "FMSCredsPath": "C:\\Program Files\\FileMaker\\FileMaker Server\\CStore\\",
+    "FMSCredsFilename" : "FMSAdminCreds.xml",
+    "Hostname" : "stiletto-staging.n2o-labs.com"
 }

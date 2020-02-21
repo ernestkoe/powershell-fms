@@ -57,9 +57,13 @@ TODO: check to make sure config.json vars are good
 #>
 
 $ErrorActionPreference = 'Stop'
-$env = Get-Content config.JSON | ConvertFrom-Json
-
-Write-Host $Hostname $CertPath $WACSFMSCredsFileName $WACSFMSCredsPath
+$configpath = Join-Path -Path $PSScriptRoot -ChildPath "config.json" 
+write-host $configpath
+$env = Get-Content $configpath| ConvertFrom-Json
+$Hostname = $env.Hostname
+$CertPath = $env.FMSCStorePath
+$FMSCredsFileName = $env.FMSCredsFilename
+$FMSCredsPath = $env.FMSCredsPath
 
 if ( !$Hostname ) {
     $Hostname = Read-Host "Hostname"
@@ -69,28 +73,29 @@ if ( !$Hostname ) {
     } 
 }
 
-
 if ( !$CertPath ) {
-    $CertPath = Read-Host "Location of SSL certificates ($($env.DEFAULT_FMS_CSTORE_PATH))"
+    $CertPath = Read-Host "Location of SSL certificates"
     if ( [string]::isNullOrEmpty($CertPath)) { 
-        $CertPath = $env.DEFAULT_FMS_CSTORE_PATH
+        Write-Output "Script halted with error: Certificate path is required"
+        exit
     }
 }
 
-if ( !$WACSFMSCredsFileName ) {
-    $WACSFMSCredsFileName = Read-Host "Encrtypted FMS Credentials file name ($($env.DEFAULT_WacsFMSCredsFilename))"
-    if ( !$WACSFMSCredsFileName ) { 
-        $WACSFMSCredsFileName = $env.DEFAULT_WacsFMSCredsFilename 
+if ( !$FMSCredsFileName ) {
+    $FMSCredsFileName = Read-Host "Encrtypted FMS Credentials file name"
+    if ( !$FMSCredsFileName ) { 
+        Write-Output "Script halted with error: FMSCredsFilename is required"
+        exit
     }
 }
 
-if ( !$WACSFMSCredsPath ) {
-    $WACSFMSCredsPath = Read-Host "Location of FMS Credentials encrypted file ($($env.DEFAULT_FMS_CSTORE_PATH))"
-    if ( !$WACSFMSCredsPath ) { $WACSFMSCredsPath = $env.DEFAULT_FMS_CSTORE_PATH }
-    else {
-        $WACSFMSCredsPath
+if ( !$FMSCredsPath ) {
+    $FMSCredsPath = Read-Host "Location of FMS Credentials encrypted file"
+    if ( !$FMSCredsPath ) {
+        Write-Output "Script halted with error: FMSCredsPath is required"
+        exit
+     }
     }
-}
 
 $CERT_FILENAME = "$($Hostname)-chain.pem"
 $KEY_FILENAME = "$($Hostname)-key.pem"
@@ -101,33 +106,39 @@ catch {	Write-Output "Script halted with error related to the certificate path" 
 try { $ImportKeyFilePath = Join-Path -Path $CertPath -ChildPath $KEY_FILENAME }
 catch { Write-Output "Script halted with error related to the key path" }
 
-try { $CredsPath = Join-Path -Path $WACSFMSCredsPath -ChildPath $WACSFMSCredsFileName }
+try { $CredsPath = Join-Path -Path $FMSCredsPath -ChildPath $FMSCredsFileName }
 catch { Write-Output "Script halted with error related to the encprypted fms creds path" }
 
 #load input credentials
 $IC = Import-CliXml $CredsPath
 $Username = $IC.Username
 $Password = $IC.GetNetworkCredential().Password
-Write-Host "Plaintext Password:" $PlainTextPassword
 
 # Print debugging info to make sure the parameters arrived
 if ($DebugOn) {
     Write-Host "FileMaker Server Host Name: $Hostname"
     Write-Host "Certificate Path: $ImportCertFilePath"
     Write-Host "Keyfile Path: "$ImportKeyFilePath
-    Write-Host "username: "$Username
-    Write-Host "password: "$Password
+    Write-Host "Username: "$Username
+    Write-Host "Password: "$Password
 }
 
 $ImportCertCmd = "fmsadmin -y -u `"$Username`" -p `"$Password`" CERTIFICATE IMPORT `"$ImportCertFilePath`" --keyfile `"$ImportKeyFilePath`""
 $RestartServerCmd = "fmsadmin -y -u `"$Username`" -p `"$Password`" restart server"
-
+Write-Host $ImportCertCmd
 if ($DebugOn) {
     Write-Host $ImportCertCmd
     Write-Host $RestartServerCmd
 }
 else {
-    Invoke-Expression $ImportCertCmd
-    Invoke-Expression $RestartServerCmd
+    if ([System.IO.File]::Exists($ImportCertFilePath)) {
+        Invoke-Expression $ImportCertCmd -ErrorAction Stop
+
+    } else {
+        Write-Output "$($ImportCertFilePath) cannot be found"
+        exit
+    }
+    
+    Invoke-Expression $RestartServerCmd -ErrorAction Stop
 }
 

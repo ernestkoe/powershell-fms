@@ -37,8 +37,8 @@ param(
 $ErrorActionPreference = 'Stop'
 
 $env = Get-Content config.JSON | ConvertFrom-Json
-$DEFAULT_PATH = $env.DEFAULT_FMS_CSTORE_PATH
-$DEFAULT_CRED_filename = $env.DEFAULT_WacsFMSCredsFilename
+$DEFAULT_PATH = $env.FMSCStorePath
+$DEFAULT_CRED_filename = $env.FMSCredsFilename
 
 function Save-Password {
 
