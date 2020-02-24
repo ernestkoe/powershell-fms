@@ -1,33 +1,31 @@
 # README #
 
-This is a collection of powershell and python scripts to make make AWS/FIleMaker Server devOps a little less painful. These tools are intended to help with the following problems:
+This is a collection of powershell scripts to make make AWS/FIleMaker Server DevOps automation and administration a little less painful. These tools are intended to help problems such as:
 
-* installing letencrypt SSL certificates via WACS
+* installing letencrypt SSL certificates via WACS (Win-Acme)
 * encrypting FileMaker admin username and password so that we can use various powershell scripts to run as admin without storing sensitive info in cleartext
 * dynamically register new IP address with AWS Route53 when the server restarts/reboots
 * running S3 sync to backup FileMaker backups and container data
 
 ## HOW-TO ##
 
-### WACS Tools ###
+#### fms Scripts ####
 
-WACS (aka Win-ACME) is a program that manages LetsEncrypt certificates on windows like certbot on Linux. Get Win-ACMEv2 for Windows from <https://github.com/PKISharp/win-acme/releases/tag/v2.0.10.> If you haven't already, download and install it; you may need .NET frameworks installed too. You will probably need to restart the EC2 Windows server.
+##### SecureAdminCreds.ps1 #####
 
-#### WACS Tools Scripts ####
-
-##### SaveFMSCredentials.ps1 #####
-
-Run this to save FileMaker Credentials to an encrypted file object. If no `-filename` or `-path` arguments are found, it will default to the filename, `WacsFMSCreds.xml` and the directory, `C:\ProgramData\win-acme`.
+Saves your FileMaker Server admin console credentials to an encrypted file object for use by robots, scheduled events or other scripts later.
 
 Command:
 
-     SaveFMSCredentials -filename "{filename}" -path "{somepath}" -u "{fmsadminUsername}" -p "{fmsadminPassword}"
+     SecureAdminCreds -filename "{filename}" -path "{somepath}" -u "{fmsadminUsername}" -p "{fmsadminPassword}"
+
+If no `-filename` or `-path` arguments are found, it will default to the filename, `FMSCreds.xml` and the directory, `C:\Program Files\FileMaker\FileMaker Server\CStore`.
 
 Note: Quotes are optional and are used to escape arguments that contain spaces.
 
 Example:
   
-     ./SaveFMSCredentials.ps1 -filename fmsSecrets.xml -path C:\mysecrets -u theadminuser -p thepassword
+     ./SecureAdminCreds.ps1 -filename fmsSecrets.xml -path C:\mysecrets -u theadminuser -p thepassword
 
 ##### InstallSSL.ps1 #####
 

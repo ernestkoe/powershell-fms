@@ -7,7 +7,7 @@
 Import-Module AWSPowerShell.NetCore
 
 # Import from JSON object
-$Path = "./R53_config.json"
+$Path = "./r53_config.json"
 $JSONdata = Get-Content -Raw -Path $Path | ConvertFrom-Json
 
 

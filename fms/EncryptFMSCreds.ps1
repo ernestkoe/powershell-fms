@@ -36,9 +36,11 @@ param(
 )  
 $ErrorActionPreference = 'Stop'
 
-$env = Get-Content config.JSON | ConvertFrom-Json
-$DEFAULT_PATH = $env.FMSCStorePath
-$DEFAULT_CRED_filename = $env.FMSCredsFilename
+$scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
+. $scriptDir\LoadConfig.ps1
+
+$DEFAULT_PATH = $Conf.FMSCStorePath
+$DEFAULT_CRED_filename = $Conf.FMSCredsFilename
 
 function Save-Password {
 

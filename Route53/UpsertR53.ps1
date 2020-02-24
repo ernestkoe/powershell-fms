@@ -6,8 +6,7 @@
 
 Import-Module AWSPowerShell.NetCore
 
-
-$Config = "./R53_config.json"
+$Config = "./r53_config.json"
 $ConfigJSON = Get-Content -Raw -Path $Config | ConvertFrom-Json
 
 
@@ -30,22 +29,3 @@ $TheObject = @(
         )
     }
 )
-
-{
-    "Comment": "Update the A record set",
-    "Changes": [
-      {
-        "Action": "UPSERT",
-        "ResourceRecordSet": {
-          "Name": "n2o-dev.proof-labs.com",
-          "Type": "A",
-          "TTL": 300,
-          "ResourceRecords": [
-            {
-              "Value": ""
-            }
-          ]
-        }
-      }
-    ]
-  }

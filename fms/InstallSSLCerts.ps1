@@ -59,10 +59,10 @@ TODO: check to make sure config.json vars are good
 $ErrorActionPreference = 'Stop'
 $configpath = Join-Path -Path $PSScriptRoot -ChildPath "config.json" 
 write-host $configpath
-$env = Get-Content $configpath | ConvertFrom-Json
+$Conf = Get-Content $configpath | ConvertFrom-Json
 
 if ( !$Hostname ) {
-    $Hostname = $env.Hostname
+    $Hostname = $Conf.Hostname
 
     if ( !$Hostname ) {
         $Hostname = Read-Host "Hostname"
@@ -74,7 +74,7 @@ if ( !$Hostname ) {
 }
 
 if ( !$CertPath ) {
-    $CertPath = $env.FMSCStorePath
+    $CertPath = $Conf.FMSCStorePath
     if ( !$CertPath ) {
         $CertPath = Read-Host "Location of SSL certificates"
         if ( [string]::isNullOrEmpty($CertPath)) { 
@@ -85,7 +85,7 @@ if ( !$CertPath ) {
 }
 
 if ( !$FMSCredsFileName ) {
-    $FMSCredsFileName = $env.FMSCredsFilename
+    $FMSCredsFileName = $Conf.FMSCredsFilename
     if ( !$FMSCredsFileName ) {
         $FMSCredsFileName = Read-Host "Encrtypted FMS Credentials file name"
         if ( !$FMSCredsFileName ) { 
@@ -96,7 +96,7 @@ if ( !$FMSCredsFileName ) {
 }
 
 if ( !$FMSCredsPath ) {
-    $FMSCredsPath = $env.FMSCredsPath
+    $FMSCredsPath = $Conf.FMSCredsPath
     if ( !$FMSCredsPath ) {
         $FMSCredsPath = Read-Host "Location of FMS Credentials encrypted file"
         if ( !$FMSCredsPath ) {
@@ -118,10 +118,8 @@ catch { Write-Output "Script halted with error related to the key path" }
 try { $CredsPath = Join-Path -Path $FMSCredsPath -ChildPath $FMSCredsFileName }
 catch { Write-Output "Script halted with error related to the encprypted fms creds path" }
 
-#load input credentials
-$IC = Import-CliXml $CredsPath
-$Username = $IC.Username
-$Password = $IC.GetNetworkCredential().Password
+$scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
+. $scriptDir\LoadConfig.ps1
 
 # Print debugging info to make sure the parameters arrived
 if ($DebugOn) {
