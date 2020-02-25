@@ -25,24 +25,28 @@ This is a collection of powershell scripts to make FIleMaker Server DevOps autom
 
 ## fms scripts ##
 
-### EncyptFMSCreds.ps1 ###
+### EncryptCreds.ps1 ###
 
-`EncyptFMSCreds.ps1` saves your FileMaker Server admin console credentials to an encrypted file object for use by robots, scheduled events or other scripts to do `fmsadmin` commands on your behalf.
+`EncryptCreds.ps1` saves your FileMaker Server admin console credentials to an encrypted PSCredentials object for secure storage on the server file system so that robots, scheduled events or other scripts can decrypt and perform `fmsadmin` commands on your behalf more securely.
 
 `cd` to the fms scripts folder, e.g. `C:\Program Files\proof-powershell-fms\fms`, then run from your powershell prompt:
  
 
-      > .\EncyptFMSCreds.ps1
+      > .\EncryptCreds.ps1
 
 Advanced: You can also pass it parameters to override stuff in the config file like so:
 
-     > EncyptFMSCreds.ps1 -filename "{filename}" -path "{somepath}" -u "{fmsadminUsername}" -p "{fmsadminPassword}"
+     > EncryptCreds.ps1 -filename "{filename}" -path "{somepath}" -u "{fmsadminUsername}" -p "{fmsadminPassword}"
 
 Note: Quotes are optional and are used to escape arguments that contain spaces.
 
 Example:
   
-     .\EncyptFMSCreds.ps1 -filename fmsSecrets.xml -path C:\mysecrets -u theadminuser -p thepassword
+     .\EncryptCreds.ps1 -filename fmsSecrets.xml -path C:\mysecrets -u theadminuser -p thepassword
+
+### DecryptCreds.ps1 ###
+
+Decrypts the encrypted credentials file. Useful to check if everything is properly encrypted.
 
 #### InstallSSLCerts.ps1 ####
 
@@ -51,25 +55,53 @@ Example:
 
 #### sudofmsadmin.ps1 ####
 
-`sudofmsadmin.ps` runs fmsadmin commands on your behalf, using
+`sudofmsadmin.ps1` runs fmsadmin commands on your behalf using the encrypted credentials. Run your normal `fmsadmin` command but leave out the `fmsadmin`, `-u`, and `-p` bits. Example:
+
+     > sudofmsadmin.ps1 list clients
+
+#### StartFMS.ps1 ####
+
+`StartFMS.ps1` starts all the processes in the order specified by the `StartupSequence` element in the `fms\config.json`. Out of the box, it does the following, but you can change the order and remove/add items as needed:
+
+     "StartupSequence": [
+        "SERVER",
+        "ADMINSERVER",
+        "FMSE",
+        "XDBC",
+        "WPE",
+        "FMDAPI",
+        "FMSTB"
+
+        
+#### ShutdownFMS.ps1 ####
+
+`ShutdownFMS.ps1` stops all the processes in the order specified by the `ShutdownSequence` element in the `fms\config.json`. Out of the box, it does the following, but you can change the order and remove/add items as needed:
+
+     "ShutdownSequence": [
+        "FMSTB",
+        "FMSE",
+        "XDBC",
+        "WPE",
+        "FMDAPI",
+        "ADMINSERVER",
+        "SERVER"
 
 
-## Route53 ##
+#### LoadConfig.ps1 ####
+Used by other scripts in fms to load up config.json settings
 
-DynamicDns stuff
+## TODO/IN-PROGRESS
 
-### R53 Scripts ###
-
-* Updates Route53 DNS
-* RefreshR53.ps1
-* UpsertR53.ps1
-
-#### Requirements #####
-
-* set up an AWS IAM user
-* download Windows AWS Tools
-* download Windows AWS CLI Tools
+* fmDataMigration support
+* matic package support
+* Route53 (aws) Scripts
+     * Updates Route53 DNS
+     * RefreshR53.ps1
+     * UpsertR53.ps1
+     #### Requires:
+     * AWS IAM user
+     * Windows AWS CLI Tools
   
-#### Known Issues #####
+## Known Issues ##
 
 Not tested on MacOS X. May work with tweaks to paths but ymmv.

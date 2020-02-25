@@ -59,12 +59,10 @@ TODO: check to make sure config.json vars are good
 
 $ErrorActionPreference = 'Stop'
 
-$scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
-. $scriptDir\LoadConfig.ps1
+$loadConfig = Join-Path -Path $PSScriptRoot -ChildPath "LoadConfig.ps1"
+# write-host $loadConfig
 
-$configpath = Join-Path -Path $PSScriptRoot -ChildPath "config.json" 
-write-host $configpath
-$Conf = Get-Content $configpath | ConvertFrom-Json
+. $loadConfig
 
 if ( !$Hostname ) {
     $Hostname = $Conf.Hostname
