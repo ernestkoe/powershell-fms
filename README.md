@@ -1,6 +1,6 @@
 # POWERSHELL-FMS #
 
-This is a collection of powershell scripts to make FIleMaker Server DevOps automation and administration a little less painful at Proof. This collection of scripts is intended to help with the following tasks:
+This is a collection of assorted powershell scripts to make FIleMaker Server DevOps automation and administration a little less painful at Proof. This collection of scripts is intended to help with the following tasks:
 
 * encrypting/decrypting FileMaker Server admin console username and password so that we can use various powershell scripts to run as admin without storing sensitive info in cleartext
 * running a number of fmsadmin commands without retyping username and password for each
