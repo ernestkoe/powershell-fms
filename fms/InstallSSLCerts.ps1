@@ -58,6 +58,10 @@ TODO: check to make sure config.json vars are good
 #>
 
 $ErrorActionPreference = 'Stop'
+
+$scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
+. $scriptDir\LoadConfig.ps1
+
 $configpath = Join-Path -Path $PSScriptRoot -ChildPath "config.json" 
 write-host $configpath
 $Conf = Get-Content $configpath | ConvertFrom-Json
@@ -116,11 +120,10 @@ catch {	Write-Output "Script halted with error related to the certificate path" 
 try { $ImportKeyFilePath = Join-Path -Path $CertPath -ChildPath $KEY_FILENAME }
 catch { Write-Output "Script halted with error related to the key path" }
 
-try { $CredsPath = Join-Path -Path $FMSCredsPath -ChildPath $FMSCredsFileName }
+try { $FMSCredsPath = Join-Path -Path $FMSCredsPath -ChildPath $FMSCredsFileName }
 catch { Write-Output "Script halted with error related to the encprypted fms creds path" }
 
-$scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
-. $scriptDir\LoadConfig.ps1
+
 
 # Print debugging info to make sure the parameters arrived
 if ($DebugOn) {
