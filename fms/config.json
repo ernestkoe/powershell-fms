@@ -1,8 +1,23 @@
-{   
-    "FMSCStorePath" : "C:\\Program Files\\FileMaker\\FileMaker Server\\CStore\\",
+{   "Hostname": "myserver.example.com",
+    "FMSCStorePath": "C:\\Program Files\\FileMaker\\FileMaker Server\\CStore\\",
     "FMSCredsPath": "C:\\Program Files\\FileMaker\\FileMaker Server\\CStore\\",
-    "FMSCredsFilename" : "FMSAdminCreds.xml",
-    "Hostname" : "stiletto-staging.n2o-labs.com",
-    "ShutdownSequence": ["FMSTB", "FMSE", "XDBC", "WPE", "FMDAPI", "ADMINSERVER", "SERVER"],
-    "StartupSequence": ["SERVER", "ADMINSERVER", "FMSE", "XDBC", "WPE", "FMDAPI", "FMSTB"]
+    "FMSCredsFilename": "FMSAdminCreds.xml",
+    "ShutdownSequence": [
+        "FMSTB",
+        "FMSE",
+        "XDBC",
+        "WPE",
+        "FMDAPI",
+        "ADMINSERVER",
+        "SERVER"
+    ],
+    "StartupSequence": [
+        "SERVER",
+        "ADMINSERVER",
+        "FMSE",
+        "XDBC",
+        "WPE",
+        "FMDAPI",
+        "FMSTB"
+    ]
 }

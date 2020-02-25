@@ -19,14 +19,15 @@ Hostname to use when importing the .pem files.
 .PARAMETER CertPath
 Path to the WACS certificate directory. The certificate that is imported will be "{$hostanme}-chain.pem" from this directory. 
 
+.PARAMETER FMSCredsFileName
+This file contains the encrypted filemaker server admin credentials 
+
 .PARAMETER FMSCredsPath
-Path to the FMSCreds.xml file. This file contains the encrypted filemaker server admin credentials 
+Path to the file containing the encrypted filemaker server admin credentials
 
 .PARAMETER DebugOn
 Include this switch parameter to write debug outputs for troubleshooting
 
-.PARAMETER Usage
-`InstallSSL.ps1 --host text.example.com -C C:\programdata\win-acme`
 #>
 
 param(
