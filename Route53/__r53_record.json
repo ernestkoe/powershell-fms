@@ -4,7 +4,7 @@
       {
         "Action": "UPSERT",
         "ResourceRecordSet": {
-          "Name": "n2o-dev.proof-labs.com",
+          "Name": "fmdev.n2o-labs.com",
           "Type": "A",
           "TTL": 300,
           "ResourceRecords": [

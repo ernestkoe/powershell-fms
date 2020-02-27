@@ -6,16 +6,19 @@
 
 Import-Module AWSPowerShell.NetCore
 
-$Config = "./r53_config.json"
+$Config = "r53_config.json"
 $ConfigJSON = Get-Content -Raw -Path $Config | ConvertFrom-Json
 
 
 $ResourceRecords = @{Value='127.0.0.1'}
-$Name = "TheName"
+$Name = $ConfigJSON.$Name
+$RecordType = $ConfigJSON.$RecordType
+
+Write-Host $Name
 
 $TheObject = @( 
     @{ 
-        Comment = 'Update the A record set'
+        Comment = "Update the $($RecordType) record set"
         Changes = @( 
             @{ 
                 Action='UPSERT'
