@@ -1,6 +1,6 @@
 {
 "Zone": "n2o-labs.com.",
-"Name": "fmdev",
-"RecordType":"CNAME",
-"TTL": 60
+"Name": "magnem-staging",
+"RecordType":"A",
+"TTL": 300
 }
