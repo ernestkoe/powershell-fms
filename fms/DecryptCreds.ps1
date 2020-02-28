@@ -1,6 +1,5 @@
-#load input credentials
-$scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
-. $scriptDir\LoadConfig.ps1
+# Initialize vars
+. (Join-Path -Path $PSScriptRoot -ChildPath "__init__.ps1")
 
 Write-Host "Username: $($Username)
 Password: $($Password)"
