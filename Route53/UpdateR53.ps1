@@ -13,6 +13,7 @@ $JSONData = Get-Content $ConfPath | ConvertFrom-Json
 $DomainName = $JSONdata.Name
 $Zone = $JSONData.Zone
 $RecordType = $JSONData.RecordType
+$TTL = $JSONData.TTL
 # write-host $DomainName
 
 # Create the FQDN
@@ -49,7 +50,8 @@ If ($AWSZones) {
         $UpdatedResourceRecord.Type = $RecordType
         # Set the resource record using the public IP Get-R53ResourceRecordSet -HostedZoneId $AWSZones.Id -MaxItem $AWSZones.ResourceRecordSetCount | % {$_.ResourceRecordSets}
         $UpdatedResourceRecord.ResourceRecords = (New-Object Amazon.Route53.Model.ResourceRecord($PublicIP))
-        $UpdatedResourceRecord.TTL = ($Record.TTL)
+        #$UpdatedResourceRecord.TTL = ($Record.TTL)
+        $UpdatedResourceRecord.TTL = ($TTL)
         # Create the R53 change action
         $Change = New-Object Amazon.Route53.Model.Change
         $Change.Action = [Amazon.Route53.ChangeAction]::UPSERT
