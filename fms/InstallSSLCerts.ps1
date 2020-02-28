@@ -59,10 +59,7 @@ TODO: check to make sure config.json vars are good
 
 $ErrorActionPreference = 'Stop'
 
-$loadConfig = Join-Path -Path $PSScriptRoot -ChildPath "LoadConfig.ps1"
-# write-host $loadConfig
-
-. $loadConfig
+. (Join-Path -Path $PSScriptRoot -ChildPath "__init__.ps1")
 
 if ( !$Hostname ) {
     $Hostname = $Conf.Hostname

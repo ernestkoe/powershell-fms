@@ -36,8 +36,7 @@ param(
 )  
 $ErrorActionPreference = 'Stop'
 
-$scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
-. $scriptDir\LoadConfig.ps1
+. (Join-Path -Path $PSScriptRoot -ChildPath "__init__.ps1")
 
 $DEFAULT_PATH = $Conf.FMSCStorePath
 $DEFAULT_CRED_filename = $Conf.FMSCredsFilename

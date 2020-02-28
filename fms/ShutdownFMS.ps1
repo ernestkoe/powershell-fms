@@ -2,11 +2,10 @@ param(
     [Parameter(Position = 0, Mandatory = $false)]
     [string]
     $msg
-
 )
 
-$scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
-. $scriptDir\LoadConfig.ps1
+# initialize vars
+. (Join-Path -Path $PSScriptRoot -ChildPath "__init__.ps1")
 
 $processTypes = $Conf.ShutdownSequence
 $msg = if ($msg) { $msg_txt = "`"$($smg)`"" }
@@ -17,7 +16,7 @@ Invoke-Expression $cmd_disco
 
 Foreach ($pt in $processTypes ) {
     $cmd_stop = $cmd_fmsadmin +  " STOP $($pt)" 
-    write-host $cmd_stop
+    write-host "Stopping $pt..."
     Invoke-Expression $cmd_stop -ErrorAction Stop
 }
 
