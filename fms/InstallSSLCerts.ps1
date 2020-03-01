@@ -118,17 +118,6 @@ catch { Write-Output "Script halted with error related to the key path" }
 try { $FMSCredsPath = Join-Path -Path $FMSCredsPath -ChildPath $FMSCredsFileName }
 catch { Write-Output "Script halted with error related to the encprypted fms creds path" }
 
-
-
-# Print debugging info to make sure the parameters arrived
-if ($DebugOn) {
-    Write-Host "FileMaker Server Host Name: $Hostname"
-    Write-Host "Certificate Path: $ImportCertFilePath"
-    Write-Host "Keyfile Path: "$ImportKeyFilePath
-    Write-Host "Username: "$Username
-    Write-Host "Password: "$Password
-}
-
 $ImportCertCmd = "fmsadmin -y -u `"$Username`" -p `"$Password`" CERTIFICATE IMPORT `"$ImportCertFilePath`" --keyfile `"$ImportKeyFilePath`""
 $RestartServerCmd = "fmsadmin -y -u `"$Username`" -p `"$Password`" restart server"
 Write-Host $ImportCertCmd
