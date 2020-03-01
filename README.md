@@ -13,7 +13,7 @@ This is a collection of assorted powershell scripts to make FIleMaker Server Dev
 
 **Use at your own risk.**
 
-Please be mindful of security best practices when using these powershell-fms scripts. The scripts use Windows PSCredentials object and Window's Data Protection API to save sensitive fmsadmin admin credentials to a file that is stored on the filesystem. Assuming the user account used to create these encrypted files are not compromised is this provides a reasonable but not ideal means to store and retrieve credentials so that we can automate various common FileMaker Server admin operations.
+Please be mindful of security best practices when using these powershell-fms scripts. The scripts use Windows PSCredentials object and Window's Data Protection API to save sensitive fmsadmin admin credentials to a file that is stored on the filesystem. Assuming the user account used to create these encrypted files are not compromised, this provides a reasonable but not ideal means to store and retrieve credentials so that we can automate various common FileMaker Server admin operations.
 
 However, the best way to protect your admin password is not to not save it on the filesystem in the first place.
   
