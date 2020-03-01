@@ -1,6 +1,6 @@
 {
-"Zone": "n2o-labs.com.",
-"Name": "magnem-staging",
+"Zone": "example.com.",
+"Name": "myserver",
 "RecordType":"A",
 "TTL": 300
 }

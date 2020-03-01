@@ -29,10 +29,10 @@ param(
     [string] $Path,
 
     [Parameter(Mandatory=$false)]
-    [string] $U,
+    [Security.SecureString] $U,
 
     [Parameter(Mandatory=$false)]
-    [string] $P
+    [Security.SecureString] $P
 )  
 $ErrorActionPreference = 'Stop'
 
@@ -58,12 +58,12 @@ function Save-Password {
  
     #Get credentials securely
     if (!$U -and !$P) { 
-        Write-Host 'username and password not specified'
+        Write-Host 'Username and password not specified'
         $Credentials = Get-Credential -message "What is the FileMaker Server admin user and password?"
+        Write-Host $Credentials.UserName $Credentials.Password
     } else {
-
-        $PWord = ConvertTo-SecureString -String $P -AsPlainText -Force
-        $Credentials = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $U, $PWord
+        Write-host $U $P
+        $Credentials = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $U, $P
     }
 
     try {
